@@ -1,0 +1,24 @@
+# Create File
+# 1、首先在项目的根目录下创建一个requirements.txt文件，将整个项目依赖的Python环
+# 境包列出来
+# 2、在项目的根目录下创建一个Dockerfile文件，文件不加任何后缀，修改内容如下所示
+# FROM python:3.6
+# ENV PATH /usr/local/bin:$PATH
+# ADD ./code
+# WORKDIR /code
+# RUN pip3 install requirements.txt
+# CMD scrapy crawl projectname
+
+# Build Image
+# docker build -t quotes:latest .
+
+# 推送至Docker hub
+# 首先在网站新建一个Responsitory，名为quotes
+# 为新建的Image打一个标签，命令如下
+# docker tag quotes:latest qinexpire/quotes:latest
+# docker push qinexpire/quotes
+#
+#
+# 在其他主机运行
+# docker pull qinexpire/quotes
+# docker run qinexpire/quotes
