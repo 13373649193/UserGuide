@@ -1,0 +1,59 @@
+# 版本回退
+#	git reset --hard HEAD^ 回到上一个版本
+#	git reset --hard 版本号
+# 管理修改
+#	git diff HEAD -- readme.txt
+# 撤销修改
+#	git checkout -- readme.txt
+# 删除文件
+#	1、rm file
+#	2、git rm file
+#	备注：若是误删git checkout -- file即可恢复到最新版本
+#
+# 添加远程库
+#	1、先在Hub上创建repository，然后在本地执行
+#	2、git init
+#	3、git add file
+#	4、git commit -m "comment"
+#	5、git remote add origin git@github.com:13373649193/名称.git
+#	6、git push -u origin master
+#	备注：加上-u参数，Git不但会把本地的master分支推送到远程的master分支，
+#	      还会把本地的master分支和远程的master分支关联起来，以后推送就不用
+#	      再加-u参数了
+# 创建与合并分支
+#	git checkout -b dev 表示创建并切换到dev分支，相当于以下两条命令：
+#				git branch dev
+#				git checkout dev
+#	git branch可以查看当前所有分支，当前分支前面会有一个*号
+#	把dev合并到master分支，首先切换到master分支(git checkout master)然后合
+#	并执行git merge dev，合并完成删除分支git branch -d dev
+# 接触合并冲突
+# 修改冲突文件，再做git add等操作即可
+#
+# 分支管理策略：通常，合并分支时，如果可能，Git会用Fast forward模式，但这种模式## 下 ，删除分支后，会丢掉分支信息。
+# 如果要强制禁用Fast forward模式，Git就会在merge时生成一个新的commit，这样，从分# 支历史上就可以看出分支信息。
+# git merge --no-off -m "merge with no-ff" dev
+# 因为本次合并要创建一个新的commit，所以加上-m参数，把commit描述写进去。
+# 
+# 用git log --graph命令可以看到分支合并图
+#
+# Bug分支
+# Git还提供了一个stash功能，可以把当前工作现场“储藏”起来，等以后恢复现场后继续
+# 工作：git stash
+# 工作区是干净的，刚才的工作现场存到哪去了？用git stash list命令看看
+# 工作现场还在，Git把stash内容存在某个地方了，但是需要恢复一下，有两个办法：
+# 一是用git stash apply恢复，但是恢复后，stash内容并不删除，你需要用git stash
+# drop 来删除；
+# 另一种方式是用git stash pop，恢复的同时把stash内容也删了：
+# 
+# 如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除。
+#
+#
+# 因此，多人协作的工作模式通常是这样：
+# 首先，可以试图用git push origin <branch-name>推送自己的修改；
+# 如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并；
+# 如果合并有冲突，则解决冲突，并在本地提交；
+# 没有冲突或者解决掉冲突后，再用git push origin <branch-name>推送就能成功！
+# 如果git pull提示no tracking information，则说明本地分支和远程分支的链接关系没
+# 有创建，用命令git branch --set-upstream-to <branch-name> origin/<branch-name>
+# 这就是多人协作的工作模式，一旦熟悉了，就非常简单。
